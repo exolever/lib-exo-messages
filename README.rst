@@ -16,8 +16,6 @@ Library to manage Messages
 Documentation
 -------------
 
-The full documentation is at https://lib-exo-messages.readthedocs.io.
-
 Quickstart
 ----------
 
