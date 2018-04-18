@@ -2,8 +2,9 @@ from django.apps import apps
 
 
 def user_logged_handler(sender, **kwargs):
-    Message = apps.get_model(app_label='exo_messages',
-                             model_name='Message')
+    Message = apps.get_model(
+        app_label='exo_messages',
+        model_name='Message')
 
     user = kwargs.get('user')
     Message.all_objects.filter_by_user(
