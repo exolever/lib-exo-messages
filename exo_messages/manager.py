@@ -49,10 +49,6 @@ class MessageManager(Manager):
     def update_or_create_message(self, user, code, level, **kwargs):
         """
             Creates or update a message for a given User/Code:
-            * Already readed:
-
-            * Not readed
-
         """
         should_create_new_message = created = False
         message = None
