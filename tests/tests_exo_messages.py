@@ -144,7 +144,7 @@ class ExoMessageTest(APITestCase):
             variables={'counter': 10},
         )
 
-        # aSSERTIONS
+        # ASSERTIONS
         self.assertFalse(created)
         self.assertEqual(message.variables.get('counter'), 15)
 
@@ -178,6 +178,6 @@ class ExoMessageTest(APITestCase):
             variables={'counter': 10},
         )
 
-        # aSSERTIONS
+        # ASSERTIONS
         self.assertFalse(created)
         self.assertEqual(message.variables.get('counter'), 15)
