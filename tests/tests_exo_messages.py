@@ -1,12 +1,12 @@
 from faker import Factory as FakerFactory
+from datetime import datetime
+from rest_framework.test import APITestCase
 
 try:
     from django.core.urlresolvers import reverse
 except ImportError:
     from django.urls import reverse
 from django.contrib.auth import get_user_model
-
-from rest_framework.test import APITestCase
 
 from exo_messages.models import Message
 from exo_messages.conf import settings
@@ -106,3 +106,78 @@ class ExoMessageTest(APITestCase):
         # ASSERTS
         self.assertEqual(Message.objects.filter_by_user(
             user).not_read().count(), 1)
+
+    def test_create_updatable_message_without_existing_message(self):
+        # PREPARE DATA
+        user = FakeUserFactory.create()
+        user.set_password('123456')
+        user.save()
+
+        # DO ACTION
+        message, created = Message.objects.update_or_create_message(
+            user=user,
+            code=settings.EXO_MESSAGES_CH_CODE_VALIDATED_EMAIL,
+            level=settings.EXO_MESSAGES_CH_SUCCESS,
+        )
+
+        # aSSERTIONS
+        self.assertTrue(created)
+        self.assertIsNotNone(message)
+
+    def test_create_updatable_message_with_counter(self):
+        # PREPARE DATA
+        user = FakeUserFactory.create()
+        user.set_password('123456')
+        user.save()
+        Message.objects.update_or_create_message(
+            user=user,
+            code=settings.EXO_MESSAGES_CH_CODE_VALIDATED_EMAIL,
+            level=settings.EXO_MESSAGES_CH_SUCCESS,
+            variables={'counter': 5},
+        )
+
+        # DO ACTION
+        message, created = Message.objects.update_or_create_message(
+            user=user,
+            code=settings.EXO_MESSAGES_CH_CODE_VALIDATED_EMAIL,
+            level=settings.EXO_MESSAGES_CH_SUCCESS,
+            variables={'counter': 10},
+        )
+
+        # ASSERTIONS
+        self.assertFalse(created)
+        self.assertEqual(message.variables.get('counter'), 15)
+
+    def test_update_message_with_multiple_readed_messages(self):
+        # PREPARE DATA
+        user = FakeUserFactory.create()
+        user.set_password('123456')
+        user.save()
+        for _ in range(3):
+            Message.objects.create_message(
+                user=user,
+                code=settings.EXO_MESSAGES_CH_CODE_VALIDATED_EMAIL,
+                level=settings.EXO_MESSAGES_CH_SUCCESS,
+                read_when_login=True,
+                variables={'counter': faker.random_int()}
+            )
+        self.client.login(username=user.username, password='123456')
+
+        Message.objects.update_or_create_message(
+            user=user,
+            code=settings.EXO_MESSAGES_CH_CODE_VALIDATED_EMAIL,
+            level=settings.EXO_MESSAGES_CH_SUCCESS,
+            variables={'counter': 5},
+        )
+
+        # DO ACTION
+        message, created = Message.objects.update_or_create_message(
+            user=user,
+            code=settings.EXO_MESSAGES_CH_CODE_VALIDATED_EMAIL,
+            level=settings.EXO_MESSAGES_CH_SUCCESS,
+            variables={'counter': 10},
+        )
+
+        # ASSERTIONS
+        self.assertFalse(created)
+        self.assertEqual(message.variables.get('counter'), 15)
