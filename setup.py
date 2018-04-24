@@ -59,7 +59,7 @@ setup(
     install_requires=[
         'django-model-utils>=2.0',
         'django-appconf~=1.0.2',
-        'djangorestframework==3.8.2',
+        'djangorestframework>=3.6.3',
         'psycopg2~=2.7.4',
     ],
     dependency_links=[],
