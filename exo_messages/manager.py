@@ -46,7 +46,10 @@ class MessageManager(Manager):
         messages = self.filter_by_user(user).filter_by_code(code)
         messages.delete()
 
-    def update_or_create_message(self, user, code, level, **kwargs):
+    def update_or_create_message(
+            self, user, code, level,
+            can_be_closed=False, read_when_login=False,
+            **kwargs):
         """
             Creates or update a message for a given User/Code:
         """
@@ -90,6 +93,8 @@ class MessageManager(Manager):
                 user=user,
                 code=code,
                 level=level,
+                can_be_closed=can_be_closed,
+                read_when_login=read_when_login,
                 variables=variables)
 
         return message, created
