@@ -36,10 +36,9 @@ class MessageQuerySet(models.QuerySet):
             'CUSTOM_EXO_MESSAGE_USER_ACTIVE_STATEMENT',
             default_statement)
 
-        return self.annotate(
-            user_status=models.Case(
-                *users_active_statement,
-                default=models.Value(False),
-                output_field=models.BooleanField(),
-            ),
-        ).filter(user_status=True)
+        status_case = models.Case(
+            *users_active_statement,
+            default=models.Value(False),
+            output_field=models.BooleanField(),
+        )
+        return self.annotate(user_status=status_case).filter(user_status=True)
