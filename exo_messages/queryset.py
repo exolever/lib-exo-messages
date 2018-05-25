@@ -39,6 +39,5 @@ class MessageQuerySet(models.QuerySet):
         status_case = models.Case(
             *users_active_statement,
             default=models.Value(False),
-            output_field=models.BooleanField(),
-        )
+            output_field=models.BooleanField())
         return self.annotate(user_status=status_case).filter(user_status=True)
