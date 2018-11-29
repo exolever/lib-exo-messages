@@ -44,7 +44,7 @@ EXCLUDE_FROM_PACKAGES = ['tests', ]
 
 setup(
     name='lib-exo-messages',
-    version='0.1.1',
+    version='0.2.0',
     description="""ExO library to manage Messages""",
     long_description=readme + '\n\n' + history,
     author='Javier Sujar',
