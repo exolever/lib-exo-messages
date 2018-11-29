@@ -14,4 +14,4 @@ class FakeUserFactory(django.DjangoModelFactory):
     class Meta:
         model = get_user_model()
 
-    username = factory.LazyAttribute(lambda x: faker.name())
+    uuid = factory.LazyAttribute(lambda x: faker.uuid4(cast_to=str))

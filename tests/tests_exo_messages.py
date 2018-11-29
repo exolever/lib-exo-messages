@@ -1,6 +1,6 @@
 from faker import Factory as FakerFactory
-from datetime import datetime
 from rest_framework.test import APITestCase
+from rest_framework import status
 
 try:
     from django.core.urlresolvers import reverse
@@ -35,7 +35,7 @@ class ExoMessageTest(APITestCase):
             user).not_read().count(), 1)
 
         # DO ACTION
-        self.client.login(username=user.username, password='123456')
+        self.client.login(username=user.uuid, password='123456')
 
         # ASSERTS
         self.assertFalse(Message.objects.filter_by_user(
@@ -56,7 +56,7 @@ class ExoMessageTest(APITestCase):
             user).not_read().count(), 1)
 
         # DO ACTION
-        self.client.login(username=user.username, password='123456')
+        self.client.login(username=user.uuid, password='123456')
 
         # ASSERTS
         self.assertEqual(Message.objects.filter_by_user(
@@ -74,7 +74,7 @@ class ExoMessageTest(APITestCase):
             can_be_closed=True,
         )
 
-        self.client.login(username=user.username, password='123456')
+        self.client.login(username=user.uuid, password='123456')
         pk = Message.objects.filter_by_user(user).last().pk
         url = reverse('internal-messages:message-close', kwargs={'pk': pk})
 
@@ -84,6 +84,33 @@ class ExoMessageTest(APITestCase):
         # ASSERTS
         self.assertFalse(Message.objects.filter_by_user(
             user).not_read().exists())
+
+    def test_messages_api_create_message(self):
+        # PREPARE DATA
+        user = FakeUserFactory.create()
+        user.set_password('123456')
+        user.save()
+        variables = {
+            'counter': 10
+        }
+        data = {
+            'user': str(user.uuid),
+            'code': settings.EXO_MESSAGES_CH_CODE_VALIDATED_EMAIL,
+            'level': settings.EXO_MESSAGES_CH_SUCCESS,
+            'can_be_closed': True,
+            'read_when_login': True,
+            'variables': variables
+        }
+
+        self.client.login(username=user.uuid, password='123456')
+        url = reverse('internal-messages:message-list')
+
+        # DO ACTION
+        response = self.client.post(url, data=data)
+
+        # ASSERTS
+        self.assertTrue(status.is_success(response.status_code))
+        self.assertTrue(Message.objects.all().count(), 1)
 
     def test_messages_api_do_not_close_message(self):
         # PREPARE DATA
@@ -96,7 +123,7 @@ class ExoMessageTest(APITestCase):
             level=settings.EXO_MESSAGES_CH_SUCCESS,
             can_be_closed=False,
         )
-        self.client.login(username=user.username, password='123456')
+        self.client.login(username=user.uuid, password='123456')
         pk = Message.objects.filter_by_user(user).last().pk
         url = reverse('internal-messages:message-close', kwargs={'pk': pk})
 
@@ -161,7 +188,7 @@ class ExoMessageTest(APITestCase):
                 read_when_login=True,
                 variables={'counter': faker.random_int()}
             )
-        self.client.login(username=user.username, password='123456')
+        self.client.login(username=user.uuid, password='123456')
 
         Message.objects.update_or_create_message(
             user=user,
