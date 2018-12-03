@@ -6,6 +6,7 @@ MAINTAINER ExOLever <devops@exolever.com>
 COPY . .
 
 ARG SKIP_TOX=false
+RUN cp tests/local.py.dist tests/local.py
 RUN bash -c " \
     if [ -f 'install-prereqs.sh' ]; then \
         bash install-prereqs.sh; \
