@@ -4,9 +4,6 @@ cache: pip
 python: 3.6
 matrix:
   fast_finish: true
-env:
-  - DJANGO=1.11 DATABASE=postgresql
-  - DJANGO=2.1 DATABASE=postgresql
 addons:
   postgresql: "9.5"
   sonarcloud:
