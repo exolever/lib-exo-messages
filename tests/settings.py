@@ -15,7 +15,7 @@ SECRET_KEY = "(*8^-ei!t$rx=3ebyyw4g*fsk4^&b14)12r71am7)n$2lk5(vt"
 DATABASES = {
     'default': {
         # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3'...
-        'ENGINE': 'postgresql',
+        'ENGINE': 'django.db.backends.postgresql',
         'NAME': os.environ.get('DB_NAME', 'exo_messages'),
         'USER': os.environ.get('DJANGO_DB_USER', 'postgres'),
         'PASSWORD': os.environ.get('DJANGO_DB_PASS', 'postgres'),
