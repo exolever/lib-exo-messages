@@ -3,14 +3,19 @@ from __future__ import unicode_literals, absolute_import
 
 import django
 
-from .local import *    # noqa
-
 
 DEBUG = True
 USE_TZ = True
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = "(*8^-ei!t$rx=3ebyyw4g*fsk4^&b14)12r71am7)n$2lk5(vt"
+
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": ":memory:",
+    }
+}
 
 ROOT_URLCONF = "tests.urls"
 
