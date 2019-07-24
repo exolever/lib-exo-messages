@@ -34,9 +34,12 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'rest_framework',
     'exo_messages',
+    'auth_uuid.apps.AuthConfig',
 ]
 
 SITE_ID = 1
+
+AUTH_USER_MODEL = 'auth_uuid.UserUUID'
 
 if django.VERSION >= (1, 10):
     MIDDLEWARE = (
