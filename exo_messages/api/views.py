@@ -1,6 +1,6 @@
 from rest_framework import viewsets, mixins, status
 from rest_framework.permissions import IsAuthenticated
-from rest_framework.decorators import detail_route
+from rest_framework.decorators import action
 from rest_framework.response import Response
 
 from ..models import Message
@@ -26,7 +26,7 @@ class MessageViewSet(
     def get_all_queryset(self):
         return Message.all_objects.filter_by_user(self.request.user)
 
-    @detail_route(methods=['post'], url_path='close')
+    @action(detail=True, methods=['post'], url_path='close')
     def close(self, request, pk):
         self.get_all_queryset().filter(pk=pk, can_be_closed=True).delete()
         return Response('ok')

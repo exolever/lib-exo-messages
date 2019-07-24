@@ -5,14 +5,18 @@ exo_messages
 .. image:: https://badge.fury.io/py/lib-exo-messages.svg
     :target: https://badge.fury.io/py/lib-exo-messages
 
+.. image:: https://requires.io/github/exolever/lib-exo-messages/requirements.svg?branch=master
+     :target: https://requires.io/github/exolever/lib-exo-messages/requirements/?branch=master
+     :alt: Requirements Status
+
 .. image:: https://travis-ci.org/exolever/lib-exo-messages.svg?branch=master
     :target: https://travis-ci.org/exolever/lib-exo-messages
 
 .. image:: https://codecov.io/gh/exolever/lib-exo-messages/branch/master/graph/badge.svg
     :target: https://codecov.io/gh/exolever/lib-exo-messages
 
-.. image:: https://api.codeclimate.com/v1/badges/d3edc8403472234e7348/test_coverage
-    :target: https://codeclimate.com/github/exolever/lib-exo-messages/test_coverage
+.. image:: https://sonarcloud.io/api/project_badges/measure?project=exolever_lib-exo-messages&metric=alert_status
+   :target: https://sonarcloud.io/dashboard?id=exolever_lib-exo-messages
 
 Library to manage Messages
 
