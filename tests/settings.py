@@ -2,6 +2,7 @@
 from __future__ import unicode_literals, absolute_import
 
 import django
+import os
 
 
 DEBUG = True
@@ -10,10 +11,16 @@ USE_TZ = True
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = "(*8^-ei!t$rx=3ebyyw4g*fsk4^&b14)12r71am7)n$2lk5(vt"
 
+
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": ":memory:",
+    'default': {
+        # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3'...
+        'ENGINE': 'django.contrib.gis.db.backends.postgresql',
+        'NAME': os.environ.get('DB_NAME', 'exo_messages'),
+        'USER': os.environ.get('DJANGO_DB_USER', 'postgres'),
+        'PASSWORD': os.environ.get('DJANGO_DB_PASS', 'postgres'),
+        'HOST': os.environ.get('DJANGO_DB_HOST', 'localhost'),
+        'PORT': os.environ.get('DJANGO_DB_PORT', ''),
     }
 }
 
