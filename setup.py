@@ -20,6 +20,8 @@ def get_version(*file_paths):
         return version_match.group(1)
     raise RuntimeError('Unable to find version string.')
 
+version = get_version("exo_messages", "__init__.py")
+
 if sys.argv[-1] == 'publish':
     try:
         import wheel
@@ -44,7 +46,7 @@ EXCLUDE_FROM_PACKAGES = ['tests', ]
 
 setup(
     name='lib-exo-messages',
-    version='1.3.2',
+    version=version,
     description="""ExO library to manage Messages""",
     long_description='ExO library to manage Messages',
     author='Javier Sujar, Tomas Garzon, Jose Marfil',
