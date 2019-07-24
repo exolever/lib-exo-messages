@@ -46,7 +46,7 @@ setup(
     name='lib-exo-messages',
     version='1.3.2',
     description="""ExO library to manage Messages""",
-    long_description=ExO library to manage Messages,
+    long_description='ExO library to manage Messages',
     author='Javier Sujar, Tomas Garzon, Jose Marfil',
     author_email='javier.sujar@exolever.com',
     url='https://travis-ci.org/exolever/lib-exo-messages',
