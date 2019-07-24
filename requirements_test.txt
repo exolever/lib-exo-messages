@@ -9,3 +9,5 @@ python-dateutil
 # Additional test requirements go here
 simple-user
 djangorestframework-jwt
+Faker
+factory-boy
